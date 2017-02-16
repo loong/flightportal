@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple markers</title>
+    <style>
+     html, body {
+         height: 100%;
+         margin: 0;
+         padding: 0;
+     }
+     #map {
+         height: 100%;
+     }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+
+     POIs = [{"lat": 22.337871882465436, "lng": 114.25718165618977}, {"lat": 47.81059402131495, "lng": 9.234173199716842}, {"lat": 44.66904447692307, "lng": -83.36731682692302}, {"lat": 3.278361644947621, "lng": 101.58618734564459}, {"lat": 37.4365712135135, "lng": -122.16234700810801}, {"lat": 21.00246860997224,"lng": 105.80344154584496}, {"lat": 42.5568736125, "lng": 29.03142027500001}, {"lat": 11.265223460194191, "lng": 105.32607683300971}, {"lat": -7.970856079545429, "lng": 112.84402152500002}, {"lat": 52.24227000000001, "lng": -6.364404238095224}, {"lat": 47.2856436875, "lng": -49.354794650000024}, {"lat": 29.41772695, "lng": 65.45308618333333}, {"lat": 5.962985494444435, "lng": 116.21234837777779}, {"lat": 25.29719932739726, "lng": 120.99694048082189}, {"lat": 31.956184804761904, "lng": 34.82133442857141}, {"lat": 40.91997567999999, "lng": -72.20689997999997}, {"lat": 48.75889228490567, "lng": 14.627798575471758}, {"lat": 11.471577109589054, "lng": 99.86766105479452}, {"lat": 52.1627454904762, "lng": 4.5784836428571225}, {"lat": 19.20088855737704, "lng": 100.9925721737705}]
+     
+     function initMap() {
+       var map = new google.maps.Map(document.getElementById('map'), {
+	 zoom: 4,
+	 center: POIs[0]
+       });
+
+       POIs.forEach(function(pos) {
+	 var marker = new google.maps.Marker({
+	   position: pos,
+	   map: map,
+	   title: 'Marker'
+	 });
+       });
+     }
+
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=API_KEY&signed_in=true&callback=initMap">
+    </script>
+  </body>
+</html>

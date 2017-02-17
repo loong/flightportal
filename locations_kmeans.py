@@ -2,51 +2,60 @@ import json
 import numpy as np
 from sklearn import cluster
 
+# Load data from file
 with open('locations.json') as json_data:
     data = json.load(json_data)
     data_size = len(data["locations"])
-    
-    print("# of locations %d" % data_size)
+print("# of locations %d" % data_size)
 
-    bin_size = 100
-    bin_total = data_size/bin_size + 1
-    locations = [(0,0)]*(bin_total)
-    
-    for bin_number in xrange(bin_total):
-        i, lat, lon = 0, 0, 0
-        for i in xrange(bin_size):
-            loc_number = bin_number*bin_size+i
-            if loc_number >= data_size:
-                break
-            
-            loc = data["locations"][loc_number]
-            if "latitudeE7" in loc:
-                lat, lon = lat+int(loc["latitudeE7"]), lon+int(loc["longitudeE7"])
-                i += 1
+# Binning to reduce the data size
+# Bin size roughly correspond to half a day worth of data
+bin_size = 100
+bin_total = data_size/bin_size + 1
+locations = [(0,0)]*(bin_total)
 
-        lat, lon = lat/i, lon/i
-        locations[bin_number] = [lat, lon]
+for bin_number in xrange(bin_total):
+    i, lat, lon = 0, 0, 0
+    for i in xrange(bin_size):
+        loc_number = bin_number*bin_size+i
+        if loc_number >= data_size:
+            break
+        
+        loc = data["locations"][loc_number]
+        if "latitudeE7" in loc:
+            lat, lon = lat+int(loc["latitudeE7"]), lon+int(loc["longitudeE7"])
+            i += 1
 
-    print("Reduced to %d bins" % bin_total)
+    lat, lon = lat/i, lon/i
+    locations[bin_number] = [lat, lon]
+print("Reduced to %d bins" % bin_total)
 
-    k = 20
-    kmeans = cluster.KMeans(n_clusters=k, n_jobs=-2) #use all but one cpu
-    data = np.array(locations, np.int32)
-    print(data[0:5])
-    print()
-    kmeans.fit(data)
+# Use K-Mean clustering to get k hotspots
+k = 20
+kmeans = cluster.KMeans(n_clusters=k, n_jobs=-2) #use all but one cpu
+data = np.array(locations, np.int32)
+kmeans.fit(data)
 
-    centroids = kmeans.cluster_centers_
+points = []
+for centroid in kmeans.cluster_centers_:
+    points.append({
+        "lat": centroid[0]*1e-7,
+        "lng": centroid[1]*1e-7
+    })
 
-    print(centroids)
-    
-    points = []
-    for centroid in centroids:
-        points.append({
-            "lat": centroid[0]*1e-7,
-            "lng": centroid[1]*1e-7
-        })
+labels = []
+for count in np.bincount(kmeans.labels_):
+    labels.append(float(count)/len(data)*100)
 
-    pois = json.dumps(points)
+result = []
+for l, p in zip(labels, points):
+    result.append({"position": p, "label": round(l,2)})
+result.sort(key=lambda x: x["label"], reverse=True)
 
-    print(pois)
+# print results
+for r in result:
+    print("{0} : {1}".format(r["label"], r["position"]))
+
+print("Write results to res.json")
+with open('res.json', 'w') as outfile:
+    json.dump(result, outfile)

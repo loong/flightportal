@@ -19,26 +19,77 @@
     <div id="map"></div>
     <script>
 
-     POIs = [{"lat": 22.337871882465436, "lng": 114.25718165618977}, {"lat": 47.81059402131495, "lng": 9.234173199716842}, {"lat": 44.66904447692307, "lng": -83.36731682692302}, {"lat": 3.278361644947621, "lng": 101.58618734564459}, {"lat": 37.4365712135135, "lng": -122.16234700810801}, {"lat": 21.00246860997224,"lng": 105.80344154584496}, {"lat": 42.5568736125, "lng": 29.03142027500001}, {"lat": 11.265223460194191, "lng": 105.32607683300971}, {"lat": -7.970856079545429, "lng": 112.84402152500002}, {"lat": 52.24227000000001, "lng": -6.364404238095224}, {"lat": 47.2856436875, "lng": -49.354794650000024}, {"lat": 29.41772695, "lng": 65.45308618333333}, {"lat": 5.962985494444435, "lng": 116.21234837777779}, {"lat": 25.29719932739726, "lng": 120.99694048082189}, {"lat": 31.956184804761904, "lng": 34.82133442857141}, {"lat": 40.91997567999999, "lng": -72.20689997999997}, {"lat": 48.75889228490567, "lng": 14.627798575471758}, {"lat": 11.471577109589054, "lng": 99.86766105479452}, {"lat": 52.1627454904762, "lng": 4.5784836428571225}, {"lat": 19.20088855737704, "lng": 100.9925721737705}]
+     data = [{"position": {"lat": 22.337871882465436, "lng": 114.25718165618977}, "label": 66.32}, {"position": {"lat": 47.81059402131495, "lng": 9.234173199716842}, "label": 13.48}, {"position": {"lat": 44.66904447692307, "lng": -83.36731682692302}, "label": 0.33}, {"position": {"lat": 3.278361644947621, "lng": 101.58618734564459}, "label": 3.63}, {"position": {"lat": 37.4365712135135, "lng": -122.16234700810801}, "label": 0.47}, {"position": {"lat": 21.00246860997224, "lng": 105.80344154584496}, "label": 9.14}, {"position": {"lat": 31.956184804761904, "lng": 34.82133442857141}, "label": 0.27}, {"position": {"lat": 11.265223460194191, "lng": 105.32607683300971}, "label": 1.3}, {"position": {"lat": -7.970856079545429, "lng": 112.84402152500002}, "label": 0.56}, {"position": {"lat": 47.2856436875, "lng": -49.354794650000024}, "label": 0.1}, {"position": {"lat": 48.75889228490567, "lng": 14.627798575471758}, "label": 0.67}, {"position": {"lat": 52.24227000000001, "lng": -6.364404238095224}, "label": 0.27}, {"position": {"lat": 29.41772695, "lng": 65.45308618333333}, "label": 0.08}, {"position": {"lat": 25.29719932739726, "lng": 120.99694048082189}, "label": 0.92}, {"position": {"lat": 19.20088855737704, "lng": 100.9925721737705}, "label": 0.77}, {"position": {"lat": 40.91997567999999, "lng": -72.20689997999997}, "label": 0.19}, {"position": {"lat": 5.962985494444435, "lng": 116.21234837777779}, "label": 0.23}, {"position": {"lat": 42.5568736125, "lng": 29.03142027500001}, "label": 0.1}, {"position": {"lat": 52.1627454904762, "lng": 4.5784836428571225}, "label": 0.27}, {"position": {"lat": 11.471577109589054, "lng": 99.86766105479452}, "label": 0.92}]
+
+     var styles = [
+       {
+	 stylers: [
+	   { hue: "#00ffe6" },
+	   { saturation: -20 }
+	 ]
+       },{
+	 featureType: "road",
+	 elementType: "geometry",
+	 stylers: [
+	   { lightness: 100 },
+	   { visibility: "simplified" }
+	 ]
+       },{
+	 featureType: "road",
+	 elementType: "labels",
+	 stylers: [
+	   { visibility: "off" }
+	 ]
+       }
+     ];
      
      function initMap() {
+       new google.maps.StyledMapType(styles, {name: "Styled Map"});
+       
        var map = new google.maps.Map(document.getElementById('map'), {
 	 zoom: 4,
-	 center: POIs[0]
+	 center: data[0].position
+       });
+       map.setOptions({styles: styles});
+
+       var infowindow = new google.maps.InfoWindow();
+
+       data.forEach(function(elem) {
+	 var marker = new google.maps.Marker({
+	   position: elem.position,
+	   map: map,
+	   title: elem.label
+	 });
+
+	 makeInfoWindowEvent(map, infowindow, ""+elem.label, marker);
        });
 
-       POIs.forEach(function(pos) {
-	 var marker = new google.maps.Marker({
-	   position: pos,
-	   map: map,
-	   title: 'Marker'
+       var heatMapData = []
+
+       data.forEach(function(elem) {
+	 heatMapData.push({
+	   location: new google.maps.LatLng(elem.position.lat, elem.position.lng),
+	   weight: elem.label
 	 });
+       });
+
+       var heatmap = new google.maps.visualization.HeatmapLayer({
+	 data: heatMapData,
+	 radius: 30
+       });
+       heatmap.setMap(map);
+     }
+
+     function makeInfoWindowEvent(map, infowindow, contentString, marker) {
+       google.maps.event.addListener(marker, 'click', function() {
+	 infowindow.setContent(contentString);
+	 infowindow.open(map, marker);
        });
      }
 
     </script>
     <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=API_KEY&signed_in=true&callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key=API_KEY&signed_in=true&libraries=visualization&callback=initMap">
     </script>
   </body>
 </html>

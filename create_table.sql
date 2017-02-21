@@ -1,4 +1,4 @@
-CREATE TABLE airports(
+CREATE TABLE IF NOT EXISTS airports(
        id int PRIMARY KEY UNIQUE,
        name varchar,
        city varchar,
@@ -13,4 +13,10 @@ CREATE TABLE airports(
        timezone_tz varchar,
        type varchar,
        source varchar
+);
+
+CREATE TABLE IF NOT EXISTS airport_rankings(
+       IATA char(3) NOT NULL UNIQUE,
+       rank int,
+       passengers int
 );

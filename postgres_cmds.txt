@@ -8,4 +8,7 @@ Execute .sql file
 	psql -d long -a -f create_table.sql 
 
 Copy csv data into postgres db:
-     \copy airports FROM '/Users/long/.gvm/pkgsets/go1.7/global/src/github.com/turbotardigrade/flightportal/airports.dat' DELIMITER ',' NULL AS '\N' CSV;
+
+     \copy airports FROM '/Users/long/.gvm/pkgsets/go1.7/global/src/github.com/turbotardigrade/flightportal/sources/airports.dat' DELIMITER ',' NULL AS '\N' CSV;
+     
+     \copy airport_rankings FROM '/Users/long/.gvm/pkgsets/go1.7/global/src/github.com/turbotardigrade/flightportal/sources/top50-airports.csv' DELIMITER ',' CSV HEADER;

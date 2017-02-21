@@ -35,6 +35,19 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: airport_rankings; Type: TABLE; Schema: public; Owner: long
+--
+
+CREATE TABLE airport_rankings (
+    iata character(3) NOT NULL,
+    rank integer,
+    passengers integer
+);
+
+
+ALTER TABLE airport_rankings OWNER TO long;
+
+--
 -- Name: airports; Type: TABLE; Schema: public; Owner: long
 --
 
@@ -57,6 +70,64 @@ CREATE TABLE airports (
 
 
 ALTER TABLE airports OWNER TO long;
+
+--
+-- Data for Name: airport_rankings; Type: TABLE DATA; Schema: public; Owner: long
+--
+
+COPY airport_rankings (iata, rank, passengers) FROM stdin;
+ATL	1	104171935
+PEK	2	94393000
+DXB	3	83654250
+LAX	4	80921527
+HND	5	79520000
+ORD	6	77960588
+LHR	7	75671863
+HKG	8	70502000
+PVG	9	65982100
+CDG	10	65933145
+DFW	11	65670697
+AMS	12	63625664
+FRA	13	60786937
+IST	14	60119215
+CAN	15	59780000
+JFK	16	58956288
+SIN	17	58698000
+DEN	18	58300000
+ICN	19	57765397
+BKK	20	55892428
+DEL	21	55631385
+CGK	22	54145000
+SFO	23	53106505
+KUL	24	52620000
+MAD	25	50420583
+LAS	26	47435640
+CTU	27	46039000
+SEA	28	45736700
+BOM	29	44680555
+MIA	30	44584603
+CLT	31	44422022
+YYZ	32	44335198
+BCN	33	44154693
+PHX	34	43383528
+LGW	35	43114888
+TPE	36	42296322
+MUC	37	42261309
+KMG	38	41980300
+SZX	39	41975000
+MCO	40	41923399
+SYD	41	41870000
+FCO	42	41738524
+MEX	43	41710254
+IAH	44	41615689
+SHA	45	40452900
+EWR	46	40351331
+MNL	47	39500000
+NRT	48	39053652
+MSP	49	37517957
+DOH	50	37322843
+\.
+
 
 --
 -- Data for Name: airports; Type: TABLE DATA; Schema: public; Owner: long
@@ -7248,6 +7319,14 @@ COPY airports (id, name, city, country, iata, icao, latitude, longitude, altitud
 12056	Yingkou Lanqi Airport	Yingkou	China	YKH	ZYYK	40.5425240000000002	122.358599999999996	0	\N	\N	\N	airport	OurAirports
 12057	Shenyang Dongta Airport	Shenyang	China	\N	ZYYY	41.7844009399414062	123.496002197265625	0	\N	\N	\N	airport	OurAirports
 \.
+
+
+--
+-- Name: airport_rankings airport_rankings_iata_key; Type: CONSTRAINT; Schema: public; Owner: long
+--
+
+ALTER TABLE ONLY airport_rankings
+    ADD CONSTRAINT airport_rankings_iata_key UNIQUE (iata);
 
 
 --

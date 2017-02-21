@@ -1,0 +1,11 @@
+Start manually:
+      pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+
+Stop manually:
+     pg_ctl -D /usr/local/var/postgres stop -s -m fast
+
+Execute .sql file
+	psql -d long -a -f create_table.sql 
+
+Copy csv data into postgres db:
+     \copy airports FROM '/Users/long/.gvm/pkgsets/go1.7/global/src/github.com/turbotardigrade/flightportal/airports.dat' DELIMITER ',' NULL AS '\N' CSV;

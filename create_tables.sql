@@ -20,3 +20,8 @@ CREATE TABLE IF NOT EXISTS airport_rankings(
        rank int,
        passengers int
 );
+
+CREATE TABLE IF NOT EXISTS airport_spatial(
+       id int PRIMARY KEY UNIQUE,
+       location geography(Point,4326)
+);

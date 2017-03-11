@@ -15,6 +15,19 @@ CREATE TABLE IF NOT EXISTS airports(
        source varchar
 );
 
+CREATE TABLE IF NOT EXISTS flightdiary_airports(
+       name varchar,
+       url varchar,
+       country varchar,
+       IATA char(3) NULL,
+       lon double precision,
+       value varchar,	      
+       label varchar,
+       ICAO char(4) NULL,
+       lat double precision,
+       id int PRIMARY KEY UNIQUE
+);
+
 CREATE TABLE IF NOT EXISTS airport_rankings(
        IATA char(3) NOT NULL UNIQUE,
        rank int,

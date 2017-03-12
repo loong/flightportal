@@ -1,0 +1,14 @@
+setup.py
+crawlers/__init__.py
+crawlers/items.py
+crawlers/pipelines.py
+crawlers/settings.py
+crawlers/spiders/__init__.py
+crawlers/spiders/flightdiary.py
+crawlers/spiders/flightdiary_airports.py
+crawlers/spiders/flightdiary_comments.py
+project.egg-info/PKG-INFO
+project.egg-info/SOURCES.txt
+project.egg-info/dependency_links.txt
+project.egg-info/entry_points.txt
+project.egg-info/top_level.txt

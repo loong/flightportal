@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# Scraping the following pattern:
+#      http://flightdiary.net/add-flight/search/airport/?term={IATA CODE}
 # run this spider via
 #      scrapy crawl flightdiary-airports -t csv -o flightdiary-airports.csv
 
@@ -33,10 +35,8 @@ class AirportItem(scrapy.Item):
 class FlightdiaryAirportsSpider(scrapy.Spider):
     name = "flightdiary-airports"
     allowed_domains = ["flightdiary.net"]
-    start_urls = (
-        'http://www.flightdiary.net/',
-    )
-
+    start_urls = ()
+    
     def start_requests(self):
         with open('iata_codes.json') as data_file:
             data = json.load(data_file)

@@ -1,2 +1,4 @@
+# http://help.scrapinghub.com/scrapy-cloud/dependencies-in-scrapy-cloud-projects
 projects:
   default: 166459
+requirements_file: requirements.txt

@@ -59,3 +59,21 @@ CREATE TABLE IF NOT EXISTS flightdiary_comments(
        total_yes int,
        url varchar
 );
+
+CREATE TABLE IF NOT EXISTS flightdiary_flights(
+       _type varchar,
+       aircraft varchar,
+       aircraft_reg varchar,
+       airline varchar,
+       arrival_time varchar,
+       date varchar,
+       departure_time varchar,
+       distance_mile int,
+       flight_no varchar,
+       from_iata char(3) NULL,
+       page int,
+       seat varchar,
+       timestamp int,
+       to_iata char(3) NULL,
+       username varchar
+);

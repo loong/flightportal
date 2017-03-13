@@ -1,0 +1,3 @@
+[submodule "datastore"]
+	path = datastore
+	url = https://github.com/mindworker/flightportal-datastore.git

@@ -77,3 +77,15 @@ CREATE TABLE IF NOT EXISTS flightdiary_flights(
        to_iata char(3) NULL,
        username varchar
 );
+
+CREATE TABLE IF NOT EXISTS routes(
+       airline varchar,
+       airline_id int,
+       src_airport varchar,
+       src_airport_id int,
+       dest_airport varchar,
+       dest_airport_id int,
+       codeshare char(1),
+       stops smallint,
+       equipment varchar
+);

@@ -89,3 +89,9 @@ CREATE TABLE IF NOT EXISTS routes(
        stops smallint,
        equipment varchar
 );
+
+CREATE TABLE IF NOT EXISTS routes_unique(
+       src varchar NOT NULL,
+       dest varchar NOT NULL,
+       PRIMARY KEY(src, dest)
+);

@@ -3,9 +3,9 @@ import numpy as np
 from sklearn import cluster
 
 # Load data from file
-with open('locations.json') as json_data:
+with open('minified_locations.json') as json_data:
     data = json.load(json_data)
-    data_size = len(data["locations"])
+    data_size = len(data)
 print("# of locations %d" % data_size)
 
 # Binning to reduce the data size
@@ -21,10 +21,8 @@ for bin_number in xrange(bin_total):
         if loc_number >= data_size:
             break
         
-        loc = data["locations"][loc_number]
-        if "latitudeE7" in loc:
-            lat, lon = lat+int(loc["latitudeE7"]), lon+int(loc["longitudeE7"])
-            i += 1
+        loc = data[loc_number]
+        lat, lon, i = lat+int(loc[0]), lon+int(loc[1]), i+1
 
     lat, lon = lat/i, lon/i
     locations[bin_number] = [lat, lon]

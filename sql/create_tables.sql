@@ -95,3 +95,44 @@ CREATE TABLE IF NOT EXISTS routes_unique(
        dest varchar NOT NULL,
        PRIMARY KEY(src, dest)
 );
+
+CREATE TABLE IF NOT EXISTS airlines(
+       id int PRIMARY KEY UNIQUE,
+       name varchar,
+       alias varchar,
+       IATA char(3) NULL,
+       ICAO char(4) NULL,
+       callsign varchar,
+       country varchar,
+       active char(1)
+);
+
+CREATE TABLE IF NOT EXISTS flightdiary_airlines(
+       name varchar,
+       url varchar,
+       country varchar,
+       IATA char(3) NULL,
+       value varchar,
+       label varchar,
+       id int PRIMARY KEY UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS flightdiary_airline_comments(
+       _type varchar,
+       airline_id int,
+       content text,
+       extra varchar,
+       facebook varchar,
+       helpful_percentage int,
+       id int PRIMARY KEY UNIQUE,
+       is_voted boolean,
+       name varchar,
+       page int,
+       rating smallint,
+       reported varchar,
+       time varchar,
+       timestamp varchar,
+       total_no int,
+       total_yes int,
+       url varchar
+);

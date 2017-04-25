@@ -8,7 +8,7 @@ setup(
     packages     = find_packages(),
     entry_points = {'scrapy': ['settings = crawlers.settings']},
     package_data={
-        'crawlers': ['res/*.json']
+        'crawlers': ['res/*.json', 'res/*.txt']
     },
     zip_safe=False,
     include_package_data = True,

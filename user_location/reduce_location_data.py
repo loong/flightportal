@@ -6,11 +6,12 @@ with open('locations.json') as json_data:
 
 print("Number of locations found: %d" % data_size) 
 
-points = []
+points = {'locations':[]}
+
 for loc in data["locations"]:
         if "latitudeE7" in loc:
             lat, lon = loc["latitudeE7"], loc["longitudeE7"]
-            points.append((lat, lon))
+            points['locations'].append({'latitudeE7': lat, 'longitudeE7': lon})
 
 print("Write results to minified_locations.json")
 with open('../datastore/sources/minified_locations.json', 'w') as outfile:

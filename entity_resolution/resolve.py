@@ -24,7 +24,7 @@ gold_file = open('gold_matches', 'w')
 silver_file = open('silver_matches', 'w')
 crap_file = open('crap_matches', 'w')
 
-with open('skyscanner_airlines', 'r') as f:
+with open('uk_flight_delay_data', 'r') as f:
     skylines = f.readlines()
     skylines = map(lambda x: x[:-1], skylines)
 
